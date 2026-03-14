@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
+import java.util.Set;
 
 @CommandAlias("lr|lrename")
 public class RenameCommand extends BaseCommand {
@@ -49,17 +50,21 @@ public class RenameCommand extends BaseCommand {
     @CatchUnknown
     public void onDefault(Player player) {
         plugin.adventure().player(player).sendMessage(TextUtil.parse(
-                "<yellow>LRename Commands:</yellow>\n" +
-                        "<gray>/lr rename <name></gray>\n" +
-                        "<gray>/lr lore add <text></gray>\n" +
-                        "<gray>/lr lore clear</gray>\n" +
-                        "<gray>/lr copy</gray> | <gray>/lr paste</gray>"
+                "<yellow><b>--- LRename Commands ---</b></yellow>\n" +
+                        "<gray>/lr rename <name></gray> <dark_gray>-</dark_gray> <white>Rename your item</white>\n" +
+                        "<gray>/lr lore add <text></gray> <dark_gray>-</dark_gray> <white>Add a line of lore</white>\n" +
+                        "<gray>/lr lore delline <#></gray> <dark_gray>-</dark_gray> <white>Delete a specific lore line</white>\n" +
+                        "<gray>/lr clear [name|lore]</gray> <dark_gray>-</dark_gray> <white>Clear specific or all text</white>\n" +
+                        "<gray>/lr copy</gray> | <gray>/lr paste</gray> <dark_gray>-</dark_gray> <white>Clone item text</white>\n" +
+                        "<gray>/lr hide [enchants|attributes]</gray> <dark_gray>-</dark_gray> <white>Hide item flags</white>\n" +
+                        "<gray>/lr unhide [enchants|attributes]</gray> <dark_gray>-</dark_gray> <white>Unhide item flags</white>"
         ));
     }
 
     @Subcommand("rename")
     @CommandPermission("lrename.rename")
     @Syntax("<name>")
+    @CommandCompletion("<new_name>")
     public void onRename(Player player, String newName) {
         if (!plugin.getConfigManager().isRenameEnabled()) {
             sendMessage(player, "feature-disabled");
@@ -76,6 +81,7 @@ public class RenameCommand extends BaseCommand {
     @Subcommand("lore add")
     @CommandPermission("lrename.lore")
     @Syntax("<text>")
+    @CommandCompletion("<lore_text>")
     public void onLoreAdd(Player player, String loreLine) {
         if (!plugin.getConfigManager().isLoreEnabled()) {
             sendMessage(player, "feature-disabled");
@@ -99,6 +105,7 @@ public class RenameCommand extends BaseCommand {
     @Subcommand("lore delline")
     @CommandPermission("lrename.lore")
     @Syntax("<line_number>")
+    @CommandCompletion("@lorelines")
     public void onLoreDelline(Player player, int lineNumber) {
         if (!plugin.getConfigManager().isLoreEnabled()) {
             sendMessage(player, "feature-disabled");
@@ -176,15 +183,7 @@ public class RenameCommand extends BaseCommand {
         }
 
         ItemClipboard clipboard = plugin.getClipboardManager().getClipboard(player.getUniqueId());
-        ItemStack item = player.getInventory().getItemInMainHand();
-
-        ItemMeta meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(clipboard.hasName() ? clipboard.displayName() : null);
-            meta.setLore(clipboard.hasLore() ? clipboard.lore() : null);
-
-            item.setItemMeta(meta);
-        }
+        setTemplateDetails(player, clipboard);
 
         sendMessage(player, "pasted");
     }
@@ -226,10 +225,92 @@ public class RenameCommand extends BaseCommand {
         sendMessage(player, "unhidden-attributes");
     }
 
+    @Subcommand("template save")
+    @CommandPermission("lrename.templates")
+    @Syntax("<template_name>")
+    @CommandCompletion("<name_to_save>")
+    public void onTemplate(Player player, String templateName) {
+        if (!hasValidItem(player)) return;
+
+        boolean success = plugin.getClipboardManager().copyFromItem(player.getUniqueId(), player.getInventory().getItemInMainHand());
+
+        if (!success) {
+            sendMessage(player, "templates-not-saved");
+            return;
+        }
+
+        ItemClipboard clipboard = plugin.getClipboardManager().getClipboard(player.getUniqueId());
+        plugin.getStorageManager().saveTemplate(player.getUniqueId(), templateName, clipboard);
+
+        Component successMsg = plugin.getConfigManager().getMessage("template-saved", "%template%", templateName);
+        plugin.adventure().player(player).sendMessage(successMsg);
+    }
+
+    @Subcommand("template load")
+    @CommandPermission("lrename.templates")
+    @Syntax("<template_name>")
+    @CommandCompletion("@templates")
+    public void onTemplateLoad(Player player, String templateName) {
+        if (!hasValidItem(player)) return;
+
+        ItemClipboard template = plugin.getStorageManager().loadTemplate(player.getUniqueId(), templateName);
+
+        if (template == null) {
+            sendMessage(player, "template-not-found");
+            return;
+        }
+
+        setTemplateDetails(player, template);
+
+        Component successMsg = plugin.getConfigManager().getMessage("loaded-template", "%template%", templateName);
+        plugin.adventure().player(player).sendMessage(successMsg);
+    }
+
+    @Subcommand("templates")
+    @CommandPermission("lrename.templates")
+    public void onTemplatesList(Player player) {
+        Set<String> templates = plugin.getStorageManager().getPlayerTemplates(player.getUniqueId());
+
+        if (templates == null || templates.isEmpty()) {
+            sendMessage(player, "templates-not-found");
+            return;
+        }
+
+        String list = String.join("</gray>, <yellow>", templates);
+        plugin.adventure().player(player).sendMessage(TextUtil.parse("<green>Your Templates: <yellow>" + list + "</yellow></green>"));
+    }
+
+    @Subcommand("template delete")
+    @CommandPermission("lrename.templates")
+    @Syntax("<template_name>")
+    @CommandCompletion("@templates")
+    public void onTemplateDelete(Player player, String templateName) {
+        boolean deleted = plugin.getStorageManager().deleteTemplate(player.getUniqueId(), templateName);
+
+        if (deleted) {
+            Component successMsg = plugin.getConfigManager().getMessage("deleted-template", "%template%", templateName);
+            plugin.adventure().player(player).sendMessage(successMsg);
+        } else {
+            sendMessage(player, "template-not-found");
+        }
+    }
+
     @Subcommand("reload")
     @CommandPermission("lrename.admin")
     public void onReload(CommandSender sender) {
         plugin.getConfigManager().reloadConfig();
         sendMessage(sender, "config-reloaded");
+    }
+
+    //helper
+    private void setTemplateDetails(Player player, ItemClipboard template) {
+        ItemStack item = player.getInventory().getItemInMainHand();
+        ItemMeta meta = item.getItemMeta();
+
+        if (meta != null) {
+            meta.setDisplayName(template.hasName() ? template.displayName() : null);
+            meta.setLore(template.hasLore() ? template.lore() : null);
+            item.setItemMeta(meta);
+        }
     }
 }

@@ -1,5 +1,5 @@
 name: LRename
-version: '0.1.0'
+version: '0.2.0'
 main: io.github.theeluke.LRename
 api-version: '1.21'
 authors: [theeluke]
@@ -28,9 +28,11 @@ permissions:
   lrename.clear:
     description: "Allows clearing names and lore entirely"
     default: op
-
   lrename.hide:
     description: "Allows hiding item flags like enchants and attributes"
+    default: op
+  lrename.templates:
+    description: "Allows for saving item data."
     default: op
   lrename.admin:
     description: "Allows reloading the plugin configuration"
