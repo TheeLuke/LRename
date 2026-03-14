@@ -4,13 +4,11 @@ import io.github.theeluke.LRename;
 import io.github.theeluke.lrename.models.ItemClipboard;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.inventory.ItemFlag;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class StorageManager {
 
@@ -54,6 +52,13 @@ public class StorageManager {
 
         config.set(path + ".name", clipboard.displayName());
         config.set(path + ".lore", clipboard.lore());
+        List<String> flagNames = new ArrayList<>();
+        if (clipboard.flags() != null) {
+            for(ItemFlag flag : clipboard.flags()) {
+                flagNames.add(flag.name());
+            }
+        }
+        config.set(path + ".flags", flagNames);
         save();
     }
 
@@ -67,7 +72,16 @@ public class StorageManager {
         String name = config.getString(path + ".name");
         List<String> lore = config.contains(path + ".lore") ? config.getStringList(path + ".lore") : null;
 
-        return new ItemClipboard(name, lore);
+        Set<ItemFlag> flags = new HashSet<>();
+        if (config.contains(path + ".flags")) {
+            for(String flagName : config.getStringList(path + ".flags")) {
+                try {
+                    flags.add(ItemFlag.valueOf(flagName.toUpperCase()));
+                } catch (IllegalArgumentException ignored) {}
+            }
+        }
+
+        return new ItemClipboard(name, lore, flags);
     }
 
     public Set<String> getPlayerTemplates(UUID uuid) {

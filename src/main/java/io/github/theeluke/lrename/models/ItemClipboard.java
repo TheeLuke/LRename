@@ -1,8 +1,11 @@
 package io.github.theeluke.lrename.models;
 
-import java.util.List;
+import org.bukkit.inventory.ItemFlag;
 
-public record ItemClipboard(String displayName, List<String> lore) {
+import java.util.List;
+import java.util.Set;
+
+public record ItemClipboard(String displayName, List<String> lore, Set<ItemFlag> flags) {
 
     public boolean hasName() {
         return displayName != null && !displayName.isEmpty();
@@ -10,5 +13,9 @@ public record ItemClipboard(String displayName, List<String> lore) {
 
     public boolean hasLore() {
         return lore != null && !lore.isEmpty();
+    }
+
+    public boolean hasFlags() {
+        return flags != null && !flags.isEmpty();
     }
 }

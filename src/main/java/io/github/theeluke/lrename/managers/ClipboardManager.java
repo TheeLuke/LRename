@@ -1,11 +1,13 @@
 package io.github.theeluke.lrename.managers;
 
 import io.github.theeluke.lrename.models.ItemClipboard;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 public class ClipboardManager {
@@ -19,13 +21,15 @@ public class ClipboardManager {
         assert meta != null;
         String name = meta.hasDisplayName() ? meta.getDisplayName() : null;
         var lore = meta.hasLore() ? meta.getLore() : null;
+        Set<ItemFlag> flags = meta.getItemFlags();
 
         boolean hasValidName = name != null && !name.isEmpty();
         boolean hasValidLore = lore != null && !lore.isEmpty();
+        boolean hasValidFlags = !flags.isEmpty();
 
-        if (!hasValidName && !hasValidLore) return false;
+        if (!hasValidName && !hasValidLore && !hasValidFlags) return false;
 
-        ItemClipboard clipboard = new ItemClipboard(name, lore);
+        ItemClipboard clipboard = new ItemClipboard(name, lore, flags);
         activeClipboards.put(playerId, clipboard);
         return true;
     }

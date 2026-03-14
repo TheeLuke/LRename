@@ -303,13 +303,21 @@ public class RenameCommand extends BaseCommand {
     }
 
     //helper
-    private void setTemplateDetails(Player player, ItemClipboard template) {
+    private void setTemplateDetails(Player player, ItemClipboard clipboard) {
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
 
         if (meta != null) {
-            meta.setDisplayName(template.hasName() ? template.displayName() : null);
-            meta.setLore(template.hasLore() ? template.lore() : null);
+            meta.setDisplayName(clipboard.hasName() ? clipboard.displayName() : null);
+            meta.setLore(clipboard.hasLore() ? clipboard.lore() : null);
+
+            for (org.bukkit.inventory.ItemFlag flag : org.bukkit.inventory.ItemFlag.values()) {
+                meta.removeItemFlags(flag);
+            }
+            if (clipboard.hasFlags()) {
+                meta.addItemFlags(clipboard.flags().toArray(new ItemFlag[0]));
+            }
+
             item.setItemMeta(meta);
         }
     }
