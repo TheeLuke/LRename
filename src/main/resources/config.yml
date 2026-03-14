@@ -27,15 +27,27 @@ blacklists:
     - "BARRIER"
     - "COMMAND_BLOCK"
 
+# Economy Settings
+economy:
+  # Choose the economy type: NONE, VAULT (Requires VaultAPI), or XP
+  type: "NONE"
 
+  # Set the cost for each action (Set to 0.0 to make an action free)
+  costs:
+    rename: 0.0
+    lore-add: 0.0
+    lore-delline: 0.0
+    clear-lore: 0.0
+    clear-name: 0.0
+    clear-all: 0.0
+    paste: 0.0
 
 messages:
   # You can use standard color names
   prefix: "<dark_gray>[<yellow>LRename</yellow>]</dark_gray> "
   # Or you can use specific hex codes
   item-renamed: "<#55FF55>Successfully renamed your item!"
-  # And even legacy color codes!
-  copied: "&aItem name and lore copied to clipboard."
+  copied: "<green>Item name and lore copied to clipboard."
   pasted: "<green>Pasted clipboard onto your item!"
   no-item: "<red>You must be holding an item in your main hand."
   feature-disabled: "<red>This feature is currently disabled."
@@ -60,3 +72,5 @@ messages:
   deleted-template: "<green>Deleted template <yellow>%template%</yellow>!</green>"
   blacklisted-word: "<red>You cannot use that word in an item's name or lore!</red>"
   blacklisted-material: "<red>You are not allowed to modify this type of item!</red>"
+  not-enough-money: "<red>You need <yellow>%cost%</yellow> to do this!</red>"
+  not-enough-xp: "<red>You need <green>%cost% XP Levels</green> to do this!</red>"

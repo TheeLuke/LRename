@@ -83,6 +83,10 @@ public class RenameCommand extends BaseCommand {
             return;
         }
 
+        if (!plugin.getEconomyManager().chargePlayer(player, "rename")) {
+            return;
+        }
+
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemManager.renameItem(item, newName);
         sendMessage(player, "item-renamed");
@@ -102,6 +106,10 @@ public class RenameCommand extends BaseCommand {
 
         if (plugin.getConfigManager().isWordBlacklisted(loreLine)) {
             sendMessage(player, "blacklisted-word");
+            return;
+        }
+
+        if (!plugin.getEconomyManager().chargePlayer(player, "lore-add")) {
             return;
         }
 
@@ -129,6 +137,10 @@ public class RenameCommand extends BaseCommand {
 
         if (!hasValidItem(player)) return;
 
+        if (!plugin.getEconomyManager().chargePlayer(player, "lore-delline")) {
+            return;
+        }
+
         boolean success = ItemManager.removeLoreLine(player.getInventory().getItemInMainHand(), lineNumber);
 
         if (success) {
@@ -143,6 +155,11 @@ public class RenameCommand extends BaseCommand {
     @CommandPermission("lrename.clear")
     public void onClearAll(Player player) {
         if (!hasValidItem(player)) return;
+
+        if (!plugin.getEconomyManager().chargePlayer(player, "clear-all")) {
+            return;
+        }
+
         ItemManager.clearAll(player.getInventory().getItemInMainHand());
         sendMessage(player, "all-cleared");
     }
@@ -151,6 +168,11 @@ public class RenameCommand extends BaseCommand {
     @CommandPermission("lrename.clear")
     public void onClearName(Player player) {
         if (!hasValidItem(player)) return;
+
+        if (!plugin.getEconomyManager().chargePlayer(player, "clear-name")) {
+            return;
+        }
+
         ItemManager.clearName(player.getInventory().getItemInMainHand());
         sendMessage(player, "name-cleared");
     }
@@ -159,6 +181,11 @@ public class RenameCommand extends BaseCommand {
     @CommandPermission("lrename.clear")
     public void onClearLore(Player player) {
         if (!hasValidItem(player)) return;
+
+        if (!plugin.getEconomyManager().chargePlayer(player, "clear-lore")) {
+            return;
+        }
+
         ItemManager.clearLore(player.getInventory().getItemInMainHand());
         sendMessage(player, "lore-cleared");
     }
@@ -194,6 +221,10 @@ public class RenameCommand extends BaseCommand {
 
         if (!plugin.getClipboardManager().hasClipboard(player.getUniqueId())) {
             sendMessage(player, "nothing-to-paste");
+            return;
+        }
+
+        if (!plugin.getEconomyManager().chargePlayer(player, "paste")) {
             return;
         }
 

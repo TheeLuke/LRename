@@ -4,8 +4,11 @@ import co.aikar.commands.BukkitCommandManager;
 import io.github.theeluke.lrename.commands.RenameCommand;
 import io.github.theeluke.lrename.managers.ClipboardManager;
 import io.github.theeluke.lrename.managers.ConfigManager;
+import io.github.theeluke.lrename.managers.EconomyManager;
 import io.github.theeluke.lrename.managers.StorageManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
@@ -15,6 +18,9 @@ public class LRename extends JavaPlugin {
     private ConfigManager configManager;
     private ClipboardManager clipboardManager;
     private StorageManager storageManager;
+    private EconomyManager  economyManager;
+
+    private Economy vaultEconomy = null;
     private BukkitAudiences adventure;
 
     @Override
@@ -25,6 +31,14 @@ public class LRename extends JavaPlugin {
         saveDefaultConfig();
         this.configManager = new ConfigManager(this);
         this.storageManager = new StorageManager(this);
+
+        if (setupVaultEconomy()) {
+            getLogger().info("Vault found! Economy support is enabled.");
+        } else {
+            getLogger().info("Vault not found. Vault economy features will be disabled (XP mode will still work).");
+        }
+
+        this.economyManager = new EconomyManager(this, vaultEconomy);
         BukkitCommandManager commandManager = new BukkitCommandManager(this);
 
         // clipboard
@@ -85,5 +99,21 @@ public class LRename extends JavaPlugin {
 
     public StorageManager getStorageManager() {
         return this.storageManager;
+    }
+
+    public EconomyManager getEconomyManager() {
+        return this.economyManager;
+    }
+
+    private boolean setupVaultEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        vaultEconomy = rsp.getProvider();
+        return vaultEconomy != null;
     }
 }
