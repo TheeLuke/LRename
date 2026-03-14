@@ -27,7 +27,7 @@ public class LRename extends JavaPlugin {
 
         commandManager.registerCommand(new RenameCommand(this));
 
-        getLogger().info("LRename has been enabled");
+        getLogger().info("LRename has been enabled.");
     }
 
     @Override
