@@ -30,3 +30,7 @@ messages:
   config-reloaded: "<green>LRename configuration reloaded!</green>"
   lore-line-deleted: "<green>Deleted line %line% from the lore!</green>"
   invalid-line: "<red>Invalid line number! That line does not exist.</red>"
+  hidden-enchants: "<green>Hidden enchantments on this item!</green>"
+  unhidden-enchants: "<green>Unhidden enchantments on this item!</green>"
+  hidden-attributes: "<green>Hidden attributes on this item!</green>"
+  unhidden-attributes: "<green>Unhidden attributes on this item!</green>"

@@ -1,7 +1,37 @@
 name: LRename
-version: '0.0.2'
+version: '0.1.0'
 main: io.github.theeluke.LRename
 api-version: '1.21'
 authors: [theeluke]
 description: Lightweight item renamer & lore editor
 website: theeluke.github.io
+
+commands:
+  lrename:
+    description: "Main command for LRename"
+    aliases: [lr]
+
+permissions:
+  lrename.use:
+    description: "Allows basic access to LRename commands"
+    default: false
+
+  lrename.rename:
+    description: "Allows renaming items"
+    default: false
+  lrename.lore:
+    description: "Allows adding and removing lore lines"
+    default: false
+  lrename.copypaste:
+    description: "Allows copying and pasting of item data"
+    default: false
+  lrename.clear:
+    description: "Allows clearing names and lore entirely"
+    default: false
+
+  lrename.hide:
+    description: "Allows hiding item flags like enchants and attributes"
+    default: op
+  lrename.admin:
+    description: "Allows reloading the plugin configuration"
+    default: op

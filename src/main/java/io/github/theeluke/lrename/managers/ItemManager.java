@@ -1,6 +1,7 @@
 package io.github.theeluke.lrename.managers;
 
 import io.github.theeluke.lrename.utils.TextUtil;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -89,6 +90,17 @@ public class ItemManager {
         }
 
         meta.setLore(formattedLore);
+        item.setItemMeta(meta);
+    }
+
+    public static void setItemFlag(ItemStack item, ItemFlag flag, boolean apply) {
+        if (item == null) return;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        if (apply) meta.addItemFlags(flag);
+        else meta.removeItemFlags(flag);
+
         item.setItemMeta(meta);
     }
 

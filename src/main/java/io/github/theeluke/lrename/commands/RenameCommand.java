@@ -10,6 +10,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -186,6 +187,43 @@ public class RenameCommand extends BaseCommand {
         }
 
         sendMessage(player, "pasted");
+    }
+
+    @Subcommand("hide enchants")
+    @CommandPermission("lrename.hide")
+    public void onHideEnchants(Player player) {
+        if (!hasValidItem(player)) return;
+
+        ItemManager.setItemFlag(player.getInventory().getItemInMainHand(), ItemFlag.HIDE_ENCHANTS, true);
+
+        sendMessage(player, "hidden-enchants");
+    }
+
+    @Subcommand("hide attributes")
+    @CommandPermission("lrename.hide")
+    public void onHideAttributes(Player player) {
+        if (!hasValidItem(player)) return;
+
+        ItemManager.setItemFlag(player.getInventory().getItemInMainHand(), ItemFlag.HIDE_ATTRIBUTES, true);
+        sendMessage(player, "hidden-attributes");
+    }
+
+    @Subcommand("unhide enchants")
+    @CommandPermission("lrename.hide")
+    public void onUnhideEnchants(Player player) {
+        if (!hasValidItem(player)) return;
+
+        ItemManager.setItemFlag(player.getInventory().getItemInMainHand(), ItemFlag.HIDE_ENCHANTS, false);
+        sendMessage(player, "unhidden-enchants");
+    }
+
+    @Subcommand("unhide attributes")
+    @CommandPermission("lrename.hide")
+    public void onUnhideAttributes(Player player) {
+        if (!hasValidItem(player)) return;
+
+        ItemManager.setItemFlag(player.getInventory().getItemInMainHand(), ItemFlag.HIDE_ATTRIBUTES, false);
+        sendMessage(player, "unhidden-attributes");
     }
 
     @Subcommand("reload")
