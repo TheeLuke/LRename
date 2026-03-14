@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ItemManager {
 
@@ -32,6 +33,15 @@ public class ItemManager {
         item.setItemMeta(meta);
     }
 
+    public static void clearName(ItemStack item) {
+        if (item == null) return;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.setDisplayName(null);
+        item.setItemMeta(meta);
+    }
+
     public static void clearLore(ItemStack item) {
         if (item == null) return;
         ItemMeta meta = item.getItemMeta();
@@ -39,6 +49,33 @@ public class ItemManager {
 
         meta.setLore(null);
         item.setItemMeta(meta);
+    }
+
+    public static void clearAll(ItemStack item) {
+        if (item == null) return;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+
+        meta.setDisplayName(null);
+        meta.setLore(null);
+
+        item.setItemMeta(meta);
+    }
+
+    public static boolean removeLoreLine(ItemStack item, int line) {
+        if (item == null || !item.hasItemMeta()) return false;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null || !meta.hasLore()) return false;
+
+        List<String> lore = meta.getLore();
+        int index = line - 1;
+
+        if (index < 0 || index >= Objects.requireNonNull(lore).size()) return false;
+        lore.remove(index);
+
+        meta.setLore(lore.isEmpty() ? null : lore);
+        item.setItemMeta(meta);
+        return true;
     }
 
     public static void setLore(ItemStack item, List<String> newLore) {

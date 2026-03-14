@@ -20,7 +20,10 @@ public class ClipboardManager {
         String name = meta.hasDisplayName() ? meta.getDisplayName() : null;
         var lore = meta.hasLore() ? meta.getLore() : null;
 
-        if (name == null || lore == null) return false;
+        boolean hasValidName = name != null && !name.isEmpty();
+        boolean hasValidLore = lore != null && !lore.isEmpty();
+
+        if (!hasValidName && !hasValidLore) return false;
 
         ItemClipboard clipboard = new ItemClipboard(name, lore);
         activeClipboards.put(playerId, clipboard);

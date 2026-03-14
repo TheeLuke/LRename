@@ -44,6 +44,17 @@ public class ConfigManager {
         return TextUtil.parse(prefix + message);
     }
 
+    public Component getMessage(String path, String target, String replacement) {
+        FileConfiguration config = plugin.getConfig();
+
+        String prefix = config.getString("messages.prefix", "&8[&bLRename&8] ");
+        String message = config.getString("messages." + path, "<red>Message missing: " + path + "</red>");
+
+        message = message.replace(target, replacement);
+
+        return TextUtil.parse(prefix + message);
+    }
+
     public Component getRawMessage(String path) {
         String message = plugin.getConfig().getString(path, "");
         return TextUtil.parse(message);

@@ -1,5 +1,5 @@
 name: LRename
-version: '0.0.1'
+version: '0.0.2'
 main: io.github.theeluke.LRename
 api-version: '1.21'
 authors: [theeluke]

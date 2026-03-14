@@ -56,7 +56,7 @@ public class RenameCommand extends BaseCommand {
         ));
     }
 
-    @Subcommand("rename|r")
+    @Subcommand("rename")
     @CommandPermission("lrename.rename")
     @Syntax("<name>")
     public void onRename(Player player, String newName) {
@@ -72,7 +72,7 @@ public class RenameCommand extends BaseCommand {
         sendMessage(player, "item-renamed");
     }
 
-    @Subcommand("lore add|l a")
+    @Subcommand("lore add")
     @CommandPermission("lrename.lore")
     @Syntax("<text>")
     public void onLoreAdd(Player player, String loreLine) {
@@ -95,9 +95,10 @@ public class RenameCommand extends BaseCommand {
         sendMessage(player, "item-renamed");
     }
 
-    @Subcommand("lore clear|l c")
+    @Subcommand("lore delline")
     @CommandPermission("lrename.lore")
-    public void onLoreClear(Player player) {
+    @Syntax("<line_number>")
+    public void onLoreDelline(Player player, int lineNumber) {
         if (!plugin.getConfigManager().isLoreEnabled()) {
             sendMessage(player, "feature-disabled");
             return;
@@ -105,11 +106,41 @@ public class RenameCommand extends BaseCommand {
 
         if (!hasValidItem(player)) return;
 
-        ItemManager.clearLore(player.getInventory().getItemInMainHand());
-        sendMessage(player, "item-renamed");
+        boolean success = ItemManager.removeLoreLine(player.getInventory().getItemInMainHand(), lineNumber);
+
+        if (success) {
+            Component successMsg = plugin.getConfigManager().getMessage("lore-line-deleted", "%line%", String.valueOf(lineNumber));
+            plugin.adventure().player(player).sendMessage(successMsg);
+        } else {
+            sendMessage(player, "invalid-line");
+        }
     }
 
-    @Subcommand("copy|c")
+    @Subcommand("clear")
+    @CommandPermission("lrename.clear")
+    public void onClearAll(Player player) {
+        if (!hasValidItem(player)) return;
+        ItemManager.clearAll(player.getInventory().getItemInMainHand());
+        sendMessage(player, "all-cleared");
+    }
+
+    @Subcommand("clear name")
+    @CommandPermission("lrename.clear")
+    public void onClearName(Player player) {
+        if (!hasValidItem(player)) return;
+        ItemManager.clearName(player.getInventory().getItemInMainHand());
+        sendMessage(player, "name-cleared");
+    }
+
+    @Subcommand("clear lore")
+    @CommandPermission("lrename.clear")
+    public void onClearLore(Player player) {
+        if (!hasValidItem(player)) return;
+        ItemManager.clearLore(player.getInventory().getItemInMainHand());
+        sendMessage(player, "lore-cleared");
+    }
+
+    @Subcommand("copy")
     @CommandPermission("lrename.copypaste")
     public void onCopy(Player player) {
         if (!plugin.getConfigManager().isClipboardEnabled()) {
@@ -128,7 +159,7 @@ public class RenameCommand extends BaseCommand {
         }
     }
 
-    @Subcommand("paste|p")
+    @Subcommand("paste")
     @CommandPermission("lrename.copypaste")
     public void onPaste(Player player) {
         if (!plugin.getConfigManager().isClipboardEnabled()) {
@@ -148,12 +179,9 @@ public class RenameCommand extends BaseCommand {
 
         ItemMeta meta = item.getItemMeta();
         if (meta != null) {
-            if (clipboard.hasName()) {
-                meta.setDisplayName(clipboard.displayName());
-            }
-            if (clipboard.hasLore()) {
-                meta.setLore(clipboard.lore());
-            }
+            meta.setDisplayName(clipboard.hasName() ? clipboard.displayName() : null);
+            meta.setLore(clipboard.hasLore() ? clipboard.lore() : null);
+
             item.setItemMeta(meta);
         }
 
