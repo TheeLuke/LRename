@@ -12,12 +12,30 @@ settings:
   allow-copy-paste: true
   max-lore-lines: 10
 
+blacklists:
+  # Prevent these words from being used in names or lore (Not case-sensitive)
+  words:
+    - "admin"
+    - "owner"
+    - "staff"
+    - "fuck"
+    - "shit"
+
+  # Prevent these specific materials from being modified
+  materials:
+    - "BEDROCK"
+    - "BARRIER"
+    - "COMMAND_BLOCK"
+
+
+
 messages:
   # You can use standard color names
   prefix: "<dark_gray>[<yellow>LRename</yellow>]</dark_gray> "
   # Or you can use specific hex codes
   item-renamed: "<#55FF55>Successfully renamed your item!"
-  copied: "<green>Item name and lore copied to clipboard."
+  # And even legacy color codes!
+  copied: "&aItem name and lore copied to clipboard."
   pasted: "<green>Pasted clipboard onto your item!"
   no-item: "<red>You must be holding an item in your main hand."
   feature-disabled: "<red>This feature is currently disabled."
@@ -40,3 +58,5 @@ messages:
   temapltes-not-found: "<red>You don't have any saved templates.</red>"
   loaded-template: "<green>Loaded template <yellow>%template%</yellow> onto your item!</green>"
   deleted-template: "<green>Deleted template <yellow>%template%</yellow>!</green>"
+  blacklisted-word: "<red>You cannot use that word in an item's name or lore!</red>"
+  blacklisted-material: "<red>You are not allowed to modify this type of item!</red>"

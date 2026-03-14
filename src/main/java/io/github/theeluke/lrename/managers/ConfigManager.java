@@ -5,6 +5,7 @@ import io.github.theeluke.lrename.utils.TextUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigManager {
@@ -58,5 +59,26 @@ public class ConfigManager {
     public Component getRawMessage(String path) {
         String message = plugin.getConfig().getString(path, "");
         return TextUtil.parse(message);
+    }
+
+    // blacklist
+
+    public boolean isWordBlacklisted(String text) {
+        if (text == null || text.isEmpty()) return false;
+
+        String lowerText = text.toLowerCase();
+        for (String word : plugin.getConfig().getStringList("blacklists.words")) {
+            if (lowerText.contains(word.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isMaterialBlacklisted(Material material) {
+        if (material == null) return false;
+
+        String materialName = material.name().toUpperCase();
+        return plugin.getConfig().getStringList("blacklists.materials").contains(materialName);
     }
 }

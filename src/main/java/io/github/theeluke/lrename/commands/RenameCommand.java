@@ -39,6 +39,11 @@ public class RenameCommand extends BaseCommand {
             sendMessage(player, "no-item");
             return false;
         }
+
+        if (plugin.getConfigManager().isMaterialBlacklisted(item.getType())) {
+            sendMessage(player, "blacklisted-material");
+            return false;
+        }
         return true;
     }
 
@@ -73,6 +78,11 @@ public class RenameCommand extends BaseCommand {
 
         if (!hasValidItem(player)) return;
 
+        if (plugin.getConfigManager().isWordBlacklisted(newName)) {
+            sendMessage(player, "blacklisted-word");
+            return;
+        }
+
         ItemStack item = player.getInventory().getItemInMainHand();
         ItemManager.renameItem(item, newName);
         sendMessage(player, "item-renamed");
@@ -89,6 +99,11 @@ public class RenameCommand extends BaseCommand {
         }
 
         if (!hasValidItem(player)) return;
+
+        if (plugin.getConfigManager().isWordBlacklisted(loreLine)) {
+            sendMessage(player, "blacklisted-word");
+            return;
+        }
 
         ItemStack item = player.getInventory().getItemInMainHand();
 
