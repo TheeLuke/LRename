@@ -14,20 +14,20 @@ commands:
 permissions:
   lrename.use:
     description: "Allows basic access to LRename commands"
-    default: false
+    default: op
 
   lrename.rename:
     description: "Allows renaming items"
-    default: false
+    default: op
   lrename.lore:
     description: "Allows adding and removing lore lines"
-    default: false
+    default: op
   lrename.copypaste:
     description: "Allows copying and pasting of item data"
-    default: false
+    default: op
   lrename.clear:
     description: "Allows clearing names and lore entirely"
-    default: false
+    default: op
 
   lrename.hide:
     description: "Allows hiding item flags like enchants and attributes"
