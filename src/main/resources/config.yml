@@ -1,0 +1,27 @@
+##################
+# LRename Config #
+#
+#(MiniMessage Supported!)
+# Use tags like <red>, <green>, <bold>, <gradient:red:blue>, or <#FF5555>
+##################
+
+# Enable/Disable specific features
+settings:
+  allow-renaming: true
+  allow-lore-editing: true
+  allow-copy-paste: true
+  max-lore-lines: 10
+
+messages:
+  # You can use standard color names
+  prefix: "<dark_gray>[<yellow>LRename</yellow>]</dark_gray> "
+  # Or you can use specific hex codes
+  item-renamed: "<#55FF55>Successfully renamed your item!"
+  copied: "<green>Item name and lore copied to clipboard."
+  pasted: "<green>Pasted clipboard onto your item!"
+  no-item: "<red>You must be holding an item in your main hand."
+  feature-disabled: "<red>This feature is currently disabled."
+  reached-max-lore-lines: "<red>You have reached the maximum lore lines limit!</red>"
+  nothing-to-copy: "<red>That item has no custom name or lore to copy!</red>"
+  nothing-to-paste: "<red>You have nothing copied to your clipboard!</red>"
+  config-reloaded: "<green>LRename configuration reloaded!</green>"
