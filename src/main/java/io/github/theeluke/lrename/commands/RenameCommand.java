@@ -54,7 +54,7 @@ public class RenameCommand extends BaseCommand {
     @Default
     @CatchUnknown
     public void onDefault(Player player) {
-        plugin.adventure().player(player).sendMessage(TextUtil.parse(
+        plugin.adventure().player(player).sendMessage(TextUtil.parse(player,
                 "<yellow><b>--- LRename Commands ---</b></yellow>\n" +
                         "<gray>/lr rename <name></gray> <dark_gray>-</dark_gray> <white>Rename your item</white>\n" +
                         "<gray>/lr lore add <text></gray> <dark_gray>-</dark_gray> <white>Add a line of lore</white>\n" +
@@ -88,7 +88,7 @@ public class RenameCommand extends BaseCommand {
         }
 
         ItemStack item = player.getInventory().getItemInMainHand();
-        ItemManager.renameItem(item, newName);
+        ItemManager.renameItem(player, item, newName);
         sendMessage(player, "item-renamed");
     }
 
@@ -121,7 +121,7 @@ public class RenameCommand extends BaseCommand {
             return;
         }
 
-        ItemManager.addLore(item, loreLine);
+        ItemManager.addLore(player, item, loreLine);
         sendMessage(player, "item-renamed");
     }
 
@@ -323,7 +323,7 @@ public class RenameCommand extends BaseCommand {
         }
 
         String list = String.join("</gray>, <yellow>", templates);
-        plugin.adventure().player(player).sendMessage(TextUtil.parse("<green>Your Templates: <yellow>" + list + "</yellow></green>"));
+        plugin.adventure().player(player).sendMessage(TextUtil.parse(player,"<green>Your Templates: <yellow>" + list + "</yellow></green>"));
     }
 
     @Subcommand("template delete")

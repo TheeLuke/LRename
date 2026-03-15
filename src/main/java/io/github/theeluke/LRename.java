@@ -31,6 +31,8 @@ public class LRename extends JavaPlugin {
         saveDefaultConfig();
         this.configManager = new ConfigManager(this);
         this.storageManager = new StorageManager(this);
+        
+
 
         if (setupVaultEconomy()) {
             getLogger().info("Vault found! Economy support is enabled.");

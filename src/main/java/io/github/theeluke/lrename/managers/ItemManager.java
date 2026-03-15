@@ -1,6 +1,7 @@
 package io.github.theeluke.lrename.managers;
 
 import io.github.theeluke.lrename.utils.TextUtil;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -11,16 +12,16 @@ import java.util.Objects;
 
 public class ItemManager {
 
-    public static void renameItem(ItemStack item, String newName) {
+    public static void renameItem(Player player, ItemStack item, String newName) {
         if (item == null) return;
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return;
 
-        meta.setDisplayName(TextUtil.toItemString(newName));
+        meta.setDisplayName(TextUtil.toItemString(player, newName));
         item.setItemMeta(meta);
     }
 
-    public static void addLore(ItemStack item, String loreLine) {
+    public static void addLore(Player player, ItemStack item, String loreLine) {
         if (item == null) return;
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return;
@@ -28,7 +29,7 @@ public class ItemManager {
         List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
 
         assert lore != null;
-        lore.add(TextUtil.toItemString(loreLine));
+        lore.add(TextUtil.toItemString(player, loreLine));
 
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -79,14 +80,14 @@ public class ItemManager {
         return true;
     }
 
-    public static void setLore(ItemStack item, List<String> newLore) {
+    public static void setLore(Player player, ItemStack item, List<String> newLore) {
         if (item == null) return;
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return;
 
         List<String> formattedLore = new ArrayList<>();
         for (String line : newLore) {
-            formattedLore.add(TextUtil.toItemString(line));
+            formattedLore.add(TextUtil.toItemString(player, line));
         }
 
         meta.setLore(formattedLore);

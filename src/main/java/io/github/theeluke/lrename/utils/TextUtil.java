@@ -3,6 +3,8 @@ package io.github.theeluke.lrename.utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class TextUtil {
 
@@ -22,8 +24,20 @@ public class TextUtil {
         return LEGACY_SERIALIZER.deserialize(text);
     }
 
-    public static String toItemString(String text) {
-        Component component = parse(text);
+    public static Component parse(Player player, String text) {
+        if (text == null || text.isEmpty()) return Component.empty();
+
+        if (player != null && Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            text = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, text);
+        }
+
+        if (text.contains("<") && text.contains(">")) return MINI_MESSAGE.deserialize(text);
+
+        return LEGACY_SERIALIZER.deserialize(text);
+    }
+
+    public static String toItemString(Player player, String text) {
+        Component component = parse(player, text);
         return ITEM_SERIALIZER.serialize(component);
     }
 }

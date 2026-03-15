@@ -6,6 +6,8 @@ authors: [theeluke]
 description: Lightweight item renamer & lore editor
 website: theeluke.github.io
 
+softdepend: [Vault, PlaceholderAPI]
+
 commands:
   lrename:
     description: "Main command for LRename"
