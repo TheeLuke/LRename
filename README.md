@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🌟 LRename
+# LRename
 
 **The Ultimate Modern Item Editor & Templating System for Spigot/Paper 1.21+**
 
@@ -11,13 +11,13 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 Tired of boring vanilla anvils and outdated renaming plugins? **LRename** completely modernizes item editing on your Minecraft server. Designed exclusively for modern versions, this lightweight but feature-packed plugin empowers your players to create stunning items using **MiniMessage hex colors, gradients, and PlaceholderAPI variables**.
 
 But it's more than just a renaming tool—it’s a full item management system. With LRename, players can copy their favorite name and lore combinations, save them as permanent templates on disk, and paste them onto new gear. Complete with Vault economy costs, strict admin blacklists, and smart tab-completion, it is the only item editor your server will ever need.
 
-## ✨ Features
+## Features
 
 * **Modern Text Formatting:** Fully supports the modern MiniMessage format (`<gradient>`, `<rainbow>`, `<#FF5555>`, etc.) alongside legacy color codes.
 * **Clipboard Memory:** Players can instantly copy an item's custom name, lore, and hidden flags to an active memory clipboard, and paste it perfectly onto new items.
@@ -31,7 +31,7 @@ But it's more than just a renaming tool—it’s a full item management system. 
 
 ---
 
-## 🚀 Installation
+## Installation
 
 1. Download the latest `LRename-1.0.0.jar` from the [Releases](https://www.google.com/search?q=../../releases) tab (or compile from source).
 2. Drop the `.jar` file into your server's `plugins/` directory.
@@ -42,28 +42,28 @@ But it's more than just a renaming tool—it’s a full item management system. 
 
 ---
 
-## 💻 Commands & Permissions
+## Commands & Permissions
 
-| Command | Description | Permission |
-| --- | --- | --- |
-| `/lr` | Base command & help menu | `lrename.use` |
-| `/lr reload` | Reloads the configuration | `lrename.admin` |
-| `/lr rename <name>` | Renames the held item | `lrename.rename` |
-| `/lr lore add <text>` | Adds a line of lore | `lrename.lore` |
-| `/lr lore delline <#>` | Deletes a specific line of lore | `lrename.lore` |
-| `/lr clear [name|lore]` | Clears specific or all custom text | `lrename.clear` |
-| `/lr hide|unhide [enchants|attributes]` | Toggles item flags | `lrename.hide` |
-| `/lr copy` | Copies the item's name/lore/flags | `lrename.copypaste` |
-| `/lr paste` | Pastes copied data to a new item | `lrename.copypaste` |
-| `/lr template save <name>` | Saves current clipboard as a template | `lrename.templates` |
-| `/lr template load <name>` | Loads a saved template onto an item | `lrename.templates` |
-| `/lr template delete <name>` | Deletes a saved template | `lrename.templates` |
-| `/lr templates` | Lists all your saved templates | `lrename.templates` |
-| **N/A** | Bypasses all XP/Vault economy costs | `lrename.bypasscost` |
+| Command                                 | Description | Permission |
+|-----------------------------------------| --- | --- |
+| `/lr`                                   | Base command & help menu | `lrename.use` |
+| `/lr reload`                            | Reloads the configuration | `lrename.admin` |
+| `/lr rename <name>`                     | Renames the held item | `lrename.rename` |
+| `/lr lore add <text>`                   | Adds a line of lore | `lrename.lore` |
+| `/lr lore delline <#>`                  | Deletes a specific line of lore | `lrename.lore` |
+| `/lr clear [name/lore]`                 | Clears specific or all custom text | `lrename.clear` |
+| `/lr hide/unhide [enchants/attributes]` | Toggles item flags | `lrename.hide` |
+| `/lr copy`                              | Copies the item's name/lore/flags | `lrename.copypaste` |
+| `/lr paste`                             | Pastes copied data to a new item | `lrename.copypaste` |
+| `/lr template save <name>`              | Saves current clipboard as a template | `lrename.templates` |
+| `/lr template load <name>`              | Loads a saved template onto an item | `lrename.templates` |
+| `/lr template delete <name>`            | Deletes a saved template | `lrename.templates` |
+| `/lr templates`                         | Lists all your saved templates | `lrename.templates` |
+| **N/A**                                 | Bypasses all XP/Vault economy costs | `lrename.bypasscost` |
 
 ---
 
-## ⚙️ Configuration Snippet
+## Configuration
 
 LRename is highly customizable. Translate every single message, tweak your blacklists, and balance your economy costs all from `config.yml`.
 
@@ -102,7 +102,7 @@ messages:
 
 ---
 
-## 🛠️ Compiling from Source
+## Compiling from Source
 
 LRename is built using Maven and Java 21. If you wish to build the plugin yourself:
 
@@ -125,9 +125,9 @@ mvn clean package
 
 ---
 
-## 🤝 Support & Contributing
+## Support & Contributing
 
-If you encounter any bugs, issues, or have feature requests, please open an issue on the [GitHub Issues tracker](https://www.google.com/search?q=../../issues). Pull requests are also welcome if you would like to contribute directly to the codebase!
+If you encounter any bugs, issues, or have feature requests, please open an issue on the [GitHub Issues tracker](https://www.google.com/search?q=../../issues).
 
 For direct contact, you can reach out on Discord: `@TheeLuke`
 
