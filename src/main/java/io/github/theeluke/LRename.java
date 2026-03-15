@@ -83,12 +83,17 @@ public class LRename extends JavaPlugin {
         getLogger().info("LRename has been enabled.");
 
         new UpdateChecker(this, 133456).getVersion(version -> {
-            if (this.getDescription().getVersion().equals(version)) {
-                getLogger().info("You are running the latest version of LRename!");
-            } else {
-                getLogger().warning("There is a new update available for LRename! (v" + version + ")");
+            String currentVersion = this.getDescription().getVersion();
+
+            String cleanFetched = version.replace("v", "").trim();
+            String cleanCurrent = currentVersion.replace("v", "").trim();
+
+            if (isNewerVersion(cleanCurrent, cleanFetched)) {
+                getLogger().warning("There is a new update available for LRename! (v" + cleanFetched + ")");
                 this.updateAvailable = true;
-                this.latestVersion = version;
+                this.latestVersion = "v" + cleanFetched;
+            } else {
+                getLogger().info("You are running the latest version of LRename!");
             }
         });
 
@@ -145,5 +150,23 @@ public class LRename extends JavaPlugin {
 
     public String getLatestVersion() {
         return latestVersion;
+    }
+
+    private boolean isNewerVersion(String current, String fetched) {
+        String[] currentParts = current.split("\\.");
+        String[] fetchedParts = fetched.split("\\.");
+
+        int length = Math.max(currentParts.length, fetchedParts.length);
+        for (int i = 0; i < length; i++) {
+            int currentNum = i < currentParts.length ? Integer.parseInt(currentParts[i]) : 0;
+            int fetchedNum = i < fetchedParts.length ? Integer.parseInt(fetchedParts[i]) : 0;
+
+            if (fetchedNum > currentNum) {
+                return true;
+            } else if (fetchedNum < currentNum) {
+                return false;
+            }
+        }
+        return false;
     }
 }
