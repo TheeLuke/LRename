@@ -1,5 +1,5 @@
 name: LRename
-version: '1.0.0'
+version: '1.0.1'
 main: io.github.theeluke.LRename
 api-version: '1.21'
 authors: [theeluke]
@@ -41,4 +41,7 @@ permissions:
     default: op
   lrename.bypasscost:
     description: "Allows not having to pay if cost function is enabled."
+    default: op
+  lrename.bypassblacklist:
+    description: "Bypasses the word and material blacklists."
     default: op

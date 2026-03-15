@@ -41,8 +41,12 @@ public class RenameCommand extends BaseCommand {
         }
 
         if (plugin.getConfigManager().isMaterialBlacklisted(item.getType())) {
-            sendMessage(player, "blacklisted-material");
-            return false;
+            if (player.hasPermission("lrename.bypassblacklist")) {
+                sendMessage(player, "bypassed-material-blacklist");
+            } else {
+                sendMessage(player, "blacklisted-material");
+                return false;
+            }
         }
         return true;
     }
@@ -80,8 +84,12 @@ public class RenameCommand extends BaseCommand {
         if (!hasValidItem(player)) return;
 
         if (plugin.getConfigManager().isWordBlacklisted(newName)) {
-            sendMessage(player, "blacklisted-word");
-            return;
+            if (player.hasPermission("lrename.bypassblacklist")) {
+                sendMessage(player, "bypassed-word-blacklist");
+            } else {
+                sendMessage(player, "blacklisted-word");
+                return;
+            }
         }
 
         if (!plugin.getEconomyManager().chargePlayer(player, "rename")) {
@@ -106,8 +114,12 @@ public class RenameCommand extends BaseCommand {
         if (!hasValidItem(player)) return;
 
         if (plugin.getConfigManager().isWordBlacklisted(loreLine)) {
-            sendMessage(player, "blacklisted-word");
-            return;
+            if (player.hasPermission("lrename.bypassblacklist")) {
+                sendMessage(player, "bypassed-word-blacklist");
+            } else {
+                sendMessage(player, "blacklisted-word");
+                return;
+            }
         }
 
         if (!plugin.getEconomyManager().chargePlayer(player, "lore-add")) {

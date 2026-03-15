@@ -74,3 +74,7 @@ messages:
   blacklisted-material: "<red>You are not allowed to modify this type of item!</red>"
   not-enough-money: "<red>You need <yellow>%cost%</yellow> to do this!</red>"
   not-enough-xp: "<red>You need <green>%cost% XP Levels</green> to do this!</red>"
+  blacklisted-word: "<red>You cannot use that word in an item's name or lore!</red>"
+  blacklisted-material: "<red>You are not allowed to modify this type of item!</red>"
+  bypassed-word-blacklist: "<gray><italic>Notice: You bypassed the word blacklist.</italic></gray>"
+  bypassed-material-blacklist: "<gray><italic>Notice: You bypassed the material blacklist.</italic></gray>"
