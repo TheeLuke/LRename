@@ -2,10 +2,12 @@ package io.github.theeluke;
 
 import co.aikar.commands.BukkitCommandManager;
 import io.github.theeluke.lrename.commands.RenameCommand;
+import io.github.theeluke.lrename.listeners.PlayerJoinListener;
 import io.github.theeluke.lrename.managers.ClipboardManager;
 import io.github.theeluke.lrename.managers.ConfigManager;
 import io.github.theeluke.lrename.managers.EconomyManager;
 import io.github.theeluke.lrename.managers.StorageManager;
+import io.github.theeluke.lrename.utils.UpdateChecker;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bstats.bukkit.Metrics;
@@ -23,6 +25,9 @@ public class LRename extends JavaPlugin {
 
     private Economy vaultEconomy = null;
     private BukkitAudiences adventure;
+
+    private boolean updateAvailable = false;
+    private String latestVersion = "";
 
     @Override
     public void onEnable() {
@@ -76,6 +81,18 @@ public class LRename extends JavaPlugin {
         commandManager.registerCommand(new RenameCommand(this));
 
         getLogger().info("LRename has been enabled.");
+
+        new UpdateChecker(this, 12345).getVersion(version -> {
+            if (this.getDescription().getVersion().equals(version)) {
+                getLogger().info("You are running the latest version of LRename!");
+            } else {
+                getLogger().warning("There is a new update available for LRename! (v" + version + ")");
+                this.updateAvailable = true;
+                this.latestVersion = version;
+            }
+        });
+
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
     }
 
     @Override
@@ -119,6 +136,14 @@ public class LRename extends JavaPlugin {
             return false;
         }
         vaultEconomy = rsp.getProvider();
-        return vaultEconomy != null;
+        return true;
+    }
+
+    public boolean isUpdateAvailable() {
+        return updateAvailable;
+    }
+
+    public String getLatestVersion() {
+        return latestVersion;
     }
 }
