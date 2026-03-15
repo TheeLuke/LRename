@@ -8,6 +8,7 @@ import io.github.theeluke.lrename.managers.EconomyManager;
 import io.github.theeluke.lrename.managers.StorageManager;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,8 +32,10 @@ public class LRename extends JavaPlugin {
         saveDefaultConfig();
         this.configManager = new ConfigManager(this);
         this.storageManager = new StorageManager(this);
-        
 
+        // bstats
+        int pluginId = 30137;
+        Metrics metrics = new Metrics(this, pluginId);
 
         if (setupVaultEconomy()) {
             getLogger().info("Vault found! Economy support is enabled.");
