@@ -61,8 +61,9 @@ public class RenameCommand extends BaseCommand {
                         "<gray>/lr lore delline <#></gray> <dark_gray>-</dark_gray> <white>Delete a specific lore line</white>\n" +
                         "<gray>/lr clear [name|lore]</gray> <dark_gray>-</dark_gray> <white>Clear specific or all text</white>\n" +
                         "<gray>/lr copy</gray> | <gray>/lr paste</gray> <dark_gray>-</dark_gray> <white>Clone item text</white>\n" +
-                        "<gray>/lr hide [enchants|attributes]</gray> <dark_gray>-</dark_gray> <white>Hide item flags</white>\n" +
-                        "<gray>/lr unhide [enchants|attributes]</gray> <dark_gray>-</dark_gray> <white>Unhide item flags</white>"
+                        "<gray>/lr template save|load|delete <name></gray> <dark_gray>-</dark_gray> <white>Manage item templates</white>\n" +
+                        "<gray>/lr templates</gray> <dark_gray>-</dark_gray> <white>List your saved templates</white>\n" +
+                        "<gray>/lr hide|unhide [enchants|attributes]</gray> <dark_gray>-</dark_gray> <white>Toggle item flags</white>"
         ));
     }
 
