@@ -13,9 +13,7 @@
 
 ## Overview
 
-Tired of boring vanilla anvils and outdated renaming plugins? **LRename** completely modernizes item editing on your Minecraft server. Designed exclusively for modern versions, this lightweight but feature-packed plugin empowers your players to create stunning items using **MiniMessage hex colors, gradients, and PlaceholderAPI variables**.
-
-But it's more than just a renaming tool—it’s a full item management system. With LRename, players can copy their favorite name and lore combinations, save them as permanent templates on disk, and paste them onto new gear. Complete with Vault economy costs, strict admin blacklists, and smart tab-completion, it is the only item editor your server will ever need.
+More than just a renaming tool, LRename is a full item management system. With it, players can copy their favorite name and lore combinations, save them as permanent templates on disk, and paste them onto new gear. Complete with Vault economy costs, strict admin blacklists, and smart tab-completion, it is the only item editor your server will ever need.
 
 ## Features
 
