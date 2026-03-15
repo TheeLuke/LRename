@@ -82,7 +82,7 @@ public class LRename extends JavaPlugin {
 
         getLogger().info("LRename has been enabled.");
 
-        new UpdateChecker(this, 12345).getVersion(version -> {
+        new UpdateChecker(this, 133456).getVersion(version -> {
             if (this.getDescription().getVersion().equals(version)) {
                 getLogger().info("You are running the latest version of LRename!");
             } else {
